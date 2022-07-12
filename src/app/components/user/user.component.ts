@@ -14,13 +14,10 @@ export class UserComponent implements OnInit {
   constructor(private service: DataStorageService
     , private route: ActivatedRoute) {
     this.actionMode = this.route.snapshot.data['actionMode'];
-    console.log(`action mode u konstruktoru ${this.actionMode}`);
   }
 
   ngOnInit(): void {
   }
-
-
 
   get visibleUserList() {
     return this.actionMode === 'List';

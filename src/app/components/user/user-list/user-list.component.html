@@ -1,22 +1,46 @@
-<div>
-  <button class="btn btn-primary float-right mt-5 mb-2"
-          routerLink="../addUser">
-    Add
-  </button>
+<div class="d-flex justify-content-end align-items-end mt-5">
+  <div class="p-1">
+    <input class="form-control" id="userListSearch" type="text"
+           placeholder="Search"
+           [(ngModel)]="search"
+           (ngModelChange)="filterUserList()" />
+  </div>
+  <div class="p-1">
+    <button class="btn btn-primary"
+            routerLink="../addUser">
+      Add
+    </button>
+  </div>
 </div>
-<table class="table table-bordered mt-5">
+
+<table class="table table-bordered mt-2">
   <thead>
     <tr>
-      <th scope="col">UserId</th>
-      <th scope="col">First Name</th>
-      <th scope="col">Last Name</th>
-      <th scope="col">User Name</th>
-      <th scope="col">Email</th>
+      <th scope="col">
+        <a role="link" aria-disabled="true" class="sort-by"
+           (click)="sort('userId')">UserId</a>
+      </th>
+      <th scope="col">
+        <a role="link" aria-disabled="true" class="sort-by"
+           (click)="sort('firstName')">First Name</a>
+      </th>
+      <th scope="col">
+        <a role="link" aria-disabled="true" class="sort-by"
+           (click)="sort('lastName')">Last Name</a>
+      </th>
+      <th scope="col" class="sort-by">
+        <a role="link" aria-disabled="true" class="sort-by"
+           (click)="sort('userName')">User Name</a>
+      </th>
+      <th scope="col">
+        <a role="link" aria-disabled="true" class="sort-by"
+           (click)="sort('email')">Email</a>
+      </th>
       <th scope="col">Actions</th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let item of users">
+    <tr *ngFor="let item of users | orderBy:orderColumn:orderDirection">
       <th>{{item.userId}}</th>
       <td>{{item.firstName}}</td>
       <td>{{item.lastName}}</td>

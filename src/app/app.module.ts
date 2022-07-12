@@ -9,8 +9,10 @@ import { UserAddEditComponent } from './components/user/user-add-edit/user-add-e
 import { PermissionComponent } from './components/permission/permission.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { DataStorageService } from './services/data-storage.service'
-import { DataService } from './services/data.service'
+import { DataStorageService } from './services/data-storage.service';
+import { DataService } from './services/data.service';
+import { OrderByPipe } from './pipes/order-by.pipe'
+
 
 @NgModule({
   declarations: [
@@ -18,7 +20,8 @@ import { DataService } from './services/data.service'
     UserComponent,
     UserListComponent,
     UserAddEditComponent,
-    PermissionComponent
+    PermissionComponent,
+    OrderByPipe
   ],
   imports: [
     FormsModule,

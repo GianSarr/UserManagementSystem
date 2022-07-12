@@ -36,14 +36,12 @@ export class PermissionComponent implements OnInit {
 
     this.dataStorageService.getAll('permission').subscribe(res => {
       this.permissions = res;
-      console.log(this.permissions);
     });
   }
 
   onAdd(item: Permission) {
     let obj = new UserPermission(this.user.userId, item.permissionId);
     this.dataStorageService.post('userPermission', obj).subscribe(res => {
-      console.log(res);
       this.loadData();
     });
   }
@@ -56,9 +54,9 @@ export class PermissionComponent implements OnInit {
     console.log(obj);
     this.dataStorageService.delete('userPermission', obj)
       .subscribe(res => {
-        console.log(res);//toaster
+        //add toastr
       }, () => {
-        console.log('greska priliko brisanja');
+        //add toastr
       });
     this.loadData();
   }

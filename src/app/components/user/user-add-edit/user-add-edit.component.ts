@@ -19,7 +19,6 @@ export class UserAddEditComponent implements OnInit {
     , private dataService: DataService
     , private router: Router) { }
   ngOnInit(): void {
-    console.log(this.dataService.selectedUser);
     if (this.dataService.selectedUser) {
       this.formTitle = 'Edit user';
       this.actionMode = 'Edit';
@@ -40,7 +39,6 @@ export class UserAddEditComponent implements OnInit {
         this.router.navigate(['']);
       });
     }
-
   }
 
   onCancel() {
