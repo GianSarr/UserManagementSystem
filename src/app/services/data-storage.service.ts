@@ -92,4 +92,18 @@ export class DataStorageService {
         , catchError(err => { return throwError(err) })
       );
   }
+
+  /**
+   * Returns list of userPermission objects 
+   * @param id User id
+   * @returns An Observable of the response, with the response body as a JSON object.
+   */
+  permissionsByUserId(id: number): Observable<any> {
+    return this.httpClient.get<any>(this.APIUrl + `permission/${id}`,)
+      .pipe
+      (
+        map(res => { return res })
+        , catchError(err => { return throwError(err) })
+      );
+  }
 }

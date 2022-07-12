@@ -1,6 +1,6 @@
 <div>
   <button class="btn btn-primary float-right mt-5 mb-2"
-          (click)="onAdd()">
+          routerLink="../addUser">
     Add
   </button>
 </div>
@@ -23,15 +23,17 @@
       <td>{{item.userName}}</td>
       <td>{{item.email}}</td>
       <td class="text-center">
-        <button class="btn btn-light"
+        <button class="btn btn-light m-1"
+                routerLink="../editUser"
                 (click)="onEdit(item)">
           Edit
         </button>
-        <button class="btn btn-light mx-1"
+        <button class="btn btn-light m-1"
                 (click)="setUserIdToDelete(item.userId)" data-target="#deleteModal" data-toggle="modal">
           Delete
         </button>
-        <button class="btn btn-light"
+        <button class="btn btn-light m-1"
+                routerLink="../permission"
                 (click)="onAssign(item)">
           Assign
         </button>
@@ -59,7 +61,7 @@
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         <button type="button" class="btn btn-primary" data-dismiss="modal"
                 (click)="onDelete(userIdToDelete)">
-          Save changes
+          Delete
         </button>
       </div>
     </div>

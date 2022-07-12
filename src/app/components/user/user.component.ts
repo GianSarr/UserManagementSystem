@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 import { DataStorageService } from 'src/app/services/data-storage.service';
 
@@ -10,7 +11,11 @@ import { DataStorageService } from 'src/app/services/data-storage.service';
 export class UserComponent implements OnInit {
   public actionMode: 'List' | 'Add' | 'Edit' = 'List';
 
-  constructor(private service: DataStorageService) { }
+  constructor(private service: DataStorageService
+    , private route: ActivatedRoute) {
+    this.actionMode = this.route.snapshot.data['actionMode'];
+    console.log(`action mode u konstruktoru ${this.actionMode}`);
+  }
 
   ngOnInit(): void {
   }

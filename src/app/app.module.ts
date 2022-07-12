@@ -10,6 +10,7 @@ import { PermissionComponent } from './components/permission/permission.componen
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { DataStorageService } from './services/data-storage.service'
+import { DataService } from './services/data.service'
 
 @NgModule({
   declarations: [
@@ -20,11 +21,12 @@ import { DataStorageService } from './services/data-storage.service'
     PermissionComponent
   ],
   imports: [
+    FormsModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
   ],
-  providers: [DataStorageService],
+  providers: [DataStorageService, DataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
