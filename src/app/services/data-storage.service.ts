@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { empty, Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators'
@@ -68,8 +68,8 @@ export class DataStorageService {
    * @param obj Object to delete
    * @returns An Observable of the response, with the response body of type Object.
    */
-  delete<T>(controllerName: string, obj: T): Observable<any> {
-    return this.httpClient.delete(this.APIUrl + `${controllerName}`, obj)
+  delete<T>(controllerName: string, options?: any): Observable<any> {
+    return this.httpClient.delete(this.APIUrl + `${controllerName}`, options)
       .pipe
       (
         map(res => { return res })

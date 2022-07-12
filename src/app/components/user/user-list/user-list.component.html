@@ -1,4 +1,4 @@
-<div class="d-flex justify-content-end align-items-end mt-5">
+<div class="d-flex justify-content-end mt-5">
   <div class="p-1">
     <input class="form-control" id="userListSearch" type="text"
            placeholder="Search"
@@ -12,62 +12,68 @@
     </button>
   </div>
 </div>
-
-<table class="table table-bordered mt-2">
-  <thead>
-    <tr>
-      <th scope="col">
-        <a role="link" aria-disabled="true" class="sort-by"
-           (click)="sort('userId')">UserId</a>
-      </th>
-      <th scope="col">
-        <a role="link" aria-disabled="true" class="sort-by"
-           (click)="sort('firstName')">First Name</a>
-      </th>
-      <th scope="col">
-        <a role="link" aria-disabled="true" class="sort-by"
-           (click)="sort('lastName')">Last Name</a>
-      </th>
-      <th scope="col" class="sort-by">
-        <a role="link" aria-disabled="true" class="sort-by"
-           (click)="sort('userName')">User Name</a>
-      </th>
-      <th scope="col">
-        <a role="link" aria-disabled="true" class="sort-by"
-           (click)="sort('email')">Email</a>
-      </th>
-      <th scope="col">Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let item of users | orderBy:orderColumn:orderDirection">
-      <th>{{item.userId}}</th>
-      <td>{{item.firstName}}</td>
-      <td>{{item.lastName}}</td>
-      <td>{{item.userName}}</td>
-      <td>{{item.email}}</td>
-      <td class="text-center">
-        <button class="btn btn-light m-1"
-                routerLink="../editUser"
-                (click)="onEdit(item)">
+<div>
+    <table class="table table-bordered mt-2">
+      <thead>
+        <tr>
+          <th scope="col">
+            <a role="link" aria-disabled="true" class="sort-by"
+            (click)="sort('userId')">UserId</a>
+          </th>
+          <th scope="col">
+            <a role="link" aria-disabled="true" class="sort-by"
+            (click)="sort('firstName')">First Name</a>
+          </th>
+          <th scope="col">
+            <a role="link" aria-disabled="true" class="sort-by"
+            (click)="sort('lastName')">Last Name</a>
+          </th>
+          <th scope="col" class="sort-by">
+            <a role="link" aria-disabled="true" class="sort-by"
+            (click)="sort('userName')">User Name</a>
+          </th>
+          <th scope="col">
+            <a role="link" aria-disabled="true" class="sort-by"
+            (click)="sort('email')">Email</a>
+          </th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+    <tbody>
+      <tr *ngFor="let item of usersToShow | orderBy:orderColumn:orderDirection">
+        <th>{{item.userId}}</th>
+        <td>{{item.firstName}}</td>
+        <td>{{item.lastName}}</td>
+        <td>{{item.userName}}</td>
+        <td>{{item.email}}</td>
+        <td class="text-center">
+          <button class="btn btn-light m-1"
+          routerLink="../editUser"
+          (click)="onEdit(item)">
           Edit
         </button>
         <button class="btn btn-light m-1"
-                (click)="setUserIdToDelete(item.userId)" data-target="#deleteModal" data-toggle="modal">
-          Delete
-        </button>
-        <button class="btn btn-light m-1"
-                routerLink="../permission"
-                (click)="onAssign(item)">
-          Assign
-        </button>
-      </td>
-    </tr>
+        (click)="setUserIdToDelete(item.userId)" data-target="#deleteModal" data-toggle="modal">
+        Delete
+      </button>
+      <button class="btn btn-light m-1"
+      routerLink="../permission"
+      (click)="onAssign(item)">
+      Assign
+    </button>
+  </td>
+  </tr>
   </tbody>
-</table>
+  </table>
+  <div class="d-flex justify-content-center mb-5">
+    <div *ngFor="let item of [].constructor(usersCount); let i = index">
+      <button *ngIf="usersCount >= 1" type="button" class="btn btn-secondary m-1" 
+      (click)="nextPage(i+1)"
+      [disabled]="getDisabledButton(i+1)">{{i + 1}}</button>
+    </div>
+  </div>
+</div>
 
-
-<!-- Modal -->
 <div class="modal fade" id="deleteModal" tabindex="-1"
      role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">

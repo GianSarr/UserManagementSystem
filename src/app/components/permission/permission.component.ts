@@ -5,10 +5,7 @@ import { UserPermission } from 'src/app/models/userPermission.model';
 import { User } from 'src/app/models/user.model';
 import { DataStorageService } from 'src/app/services/data-storage.service';
 import { DataService } from 'src/app/services/data.service';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { throwError } from 'rxjs';
-import { isNullOrUndefined } from 'util';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-permission',
@@ -47,18 +44,20 @@ export class PermissionComponent implements OnInit {
   }
 
   onDelete(permissionId: number) {
-    let obj = {
-      userId: this.user.userId,
-      permissionId: permissionId
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      body: {
+        userId: this.user.userId,
+        permissionId: permissionId,
+      },
     };
-    console.log(obj);
-    this.dataStorageService.delete('userPermission', obj)
+    this.dataStorageService.delete('userPermission', options)
       .subscribe(res => {
-        //add toastr
+        this.loadData();
       }, () => {
-        //add toastr
       });
-    this.loadData();
   }
 
 

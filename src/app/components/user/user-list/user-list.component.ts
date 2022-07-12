@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
-import { debounce, debounceTime } from 'rxjs/operators';
+import { debounceTime } from 'rxjs/operators';
 
 import { DataStorageService } from 'src/app/services/data-storage.service';
 import { DataService } from 'src/app/services/data.service';
@@ -14,14 +14,16 @@ import { User } from '../../../models/user.model'
 })
 export class UserListComponent implements OnInit {
   public users: Array<User>;
+  public usersToShow: Array<User>;
   public userIdToDelete: number;
   public search: string;
   private _search: Subject<any> = new Subject();
-  private showButtonLoadMore: boolean = true;
+  public usersCount: number = 0;
   private skip: number = 0;
   private take: number = 10;
   public orderColumn = 'userId';
-  public orderDirection = 'asc'
+  public orderDirection = 'asc';
+  public currentPage = 1;
 
   constructor(private dataStorageService: DataStorageService
     , private dataService: DataService) {
@@ -38,19 +40,21 @@ export class UserListComponent implements OnInit {
 
   loadData(filter?: string) {
     if (filter) {
-      this.dataStorageService.getAll('user/' + filter.trim())
-        .subscribe(res => { this.users = res })
+      this.dataStorageService.getAll('user/' + filter)
+        .subscribe(res => {
+          this.users = res;
+          this.usersCount = (this.users.length / 10) < 1 ?
+            1 : Math.ceil(this.users.length / 10);
+          this.getUsersToShow();
+        });
     } else {
       this.dataStorageService.getAll('user').subscribe(res => {
         this.users = res;
+        this.usersCount = (this.users.length / 10) < 1 ?
+          1 : Math.ceil(this.users.length / 10);
+        this.getUsersToShow();
       });
     }
-  }
-
-  loadMore() {
-    this.dataStorageService.getAll('user').subscribe(res => {
-      this.users = res;
-    });
   }
 
   onEdit(user: User) {
@@ -71,7 +75,26 @@ export class UserListComponent implements OnInit {
     this.dataService.selectedUser = user;
   }
 
-  //#region "Filtering and sorting"
+  //#region Pagination
+
+  getUsersToShow() {
+    this.usersToShow = this.users.splice(this.skip, this.take);
+  }
+
+  nextPage(nextPage: number) {
+    this.currentPage = nextPage;
+    this.skip = 10 * (nextPage - 1);
+    this.loadData();
+  }
+
+  getDisabledButton(currentPage: number) {
+    return this.currentPage == currentPage ? true : false;
+  }
+
+  //#endregion Pagination
+
+
+  //#region Filtering and sorting
 
   filterUserList() {
     if (this.search) {
@@ -95,6 +118,6 @@ export class UserListComponent implements OnInit {
     }
   }
 
-  //#endregion "Filtering and sorting"
+  //#endregion Filtering and sorting
 
 }
