@@ -1,27 +1,28 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { HttpClient } from '@angular/common/http'
-import { Subscription } from 'rxjs';
+
+import { DataStorageService } from 'src/app/services/data-storage.service';
 
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.css']
 })
-export class UserComponent implements OnInit, OnDestroy {
-  readonly APIUrl = "http://localhost:58241/api";
-  users: any;
-  subscription: Subscription;
- 
-  constructor(private service: HttpClient ) { }
+export class UserComponent implements OnInit {
+  public actionMode: 'List' | 'Add' | 'Edit' = 'List';
+
+  constructor(private service: DataStorageService) { }
 
   ngOnInit(): void {
-    this.subscription = this.service.get<any>(this.APIUrl + '/user').subscribe(resp=>{
-      this.users = resp; 
-    });
-
   }
 
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+
+
+  get visibleUserList() {
+    return this.actionMode === 'List';
+  }
+
+  get visibleUserAddEdit() {
+    return this.actionMode === 'Add'
+      || this.actionMode === 'Edit';
   }
 }

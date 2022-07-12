@@ -9,18 +9,22 @@ import { UserAddEditComponent } from './components/user/user-add-edit/user-add-e
 import { PermissionComponent } from './components/permission/permission.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { DataStorageService } from './services/data-storage.service'
 
 @NgModule({
   declarations: [
     AppComponent,
-    UserComponent
+    UserComponent,
+    UserListComponent,
+    UserAddEditComponent,
+    PermissionComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
   ],
-  providers: [],
+  providers: [DataStorageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
